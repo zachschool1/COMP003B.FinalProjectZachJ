@@ -48,7 +48,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
         // GET: Games/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "EmailAddress");
+            ViewData["User Id"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "EmailAddress", games.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", games.UserId);
             return View(games);
         }
 
@@ -82,7 +82,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "EmailAddress", games.UserId);
+            ViewData["User Name"] = new SelectList(_context.Users, "Id", "Name", games.UserId);
             return View(games);
         }
 

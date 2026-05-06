@@ -48,7 +48,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
         // GET: Shows/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "EmailAddress");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "EmailAddress", shows.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", shows.UserId);
             return View(shows);
         }
 
