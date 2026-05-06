@@ -82,7 +82,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
             {
                 return NotFound();
             }
-            ViewData["User Name"] = new SelectList(_context.Users, "Id", "Name", games.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", games.UserId);
             return View(games);
         }
 
@@ -118,7 +118,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "EmailAddress", games.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", games.UserId);
             return View(games);
         }
 
