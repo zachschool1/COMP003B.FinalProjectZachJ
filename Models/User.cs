@@ -17,7 +17,10 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Models
         public int? Age { get; set; } = 0;
 
         public string? AboutMe { get; set; }
-        public virtual ICollection<Games> Games { get; set; }
+        public virtual ICollection<Games> FavoriteGames { get; set; } = new List<Games>();
+        public virtual ICollection<Movies> FavoriteMovies { get; set; } = new List<Movies>();
+        public virtual ICollection<Shows> FavoriteShows { get; set; } = new List<Shows>();
+
 
     }
 }

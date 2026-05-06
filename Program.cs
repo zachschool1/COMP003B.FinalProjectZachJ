@@ -1,3 +1,6 @@
+using COMP003B.SP26.FinalProject.ZachJ.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace COMP003B.SP26.FinalProject.ZachJ
 {
     public class Program
@@ -8,6 +11,9 @@ namespace COMP003B.SP26.FinalProject.ZachJ
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<FinalsContext>(options =>
+                options.UseSqlServer("Name=ConnectionStrings:DefaultConnection"));
 
             var app = builder.Build();
 
