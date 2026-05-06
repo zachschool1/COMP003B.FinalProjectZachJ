@@ -13,7 +13,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<FinalsContext>(options =>
-                options.UseSqlServer("Name=ConnectionStrings:DefaultConnection"));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FinalsDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
             var app = builder.Build();
 
