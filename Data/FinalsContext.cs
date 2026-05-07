@@ -13,6 +13,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Data
         public DbSet<Games> Games { get; set; }
         public DbSet<Movies> Movies { get; set; }
         public DbSet<Shows> Shows { get; set; }
+        public DbSet<COMP003B.SP26.FinalProject.ZachJ.Models.Music> Music { get; set; } = default!;
 
     }
 }
