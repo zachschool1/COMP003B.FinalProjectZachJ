@@ -1,3 +1,8 @@
+// Author: Zachary Jordan
+// Course: COMP-003B: ASP.NET Core
+// Instructor: Jonathan Cruz
+// Purpose: Final project synthesizing MVC, Web API, EF Core, and middleware
+
 using COMP003B.SP26.FinalProject.ZachJ.Data;
 using Microsoft.EntityFrameworkCore;
 
