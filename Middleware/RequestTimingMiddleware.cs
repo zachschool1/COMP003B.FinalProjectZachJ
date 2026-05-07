@@ -16,13 +16,11 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Middleware
             //method path and execution time
             var clock = Stopwatch.StartNew();
             
-
             await _next(context);
 
             clock.Stop();
             
-            Console.WriteLine($"[Request] {context.Request.Method} {context.Request.Path}\n[Execution Time] {clock.Elapsed.Milliseconds} ms.");
-            
+            Console.WriteLine($"[Request] {context.Request.Method} {context.Request.Path}\n[Execution Time] {clock.Elapsed.Milliseconds} ms.");            
         }
     }
 }
