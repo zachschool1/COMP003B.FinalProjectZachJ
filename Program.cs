@@ -2,7 +2,7 @@
 // Course: COMP-003B: ASP.NET Core
 // Instructor: Jonathan Cruz
 // Purpose: Final project synthesizing MVC, Web API, EF Core, and middleware
-
+using COMP003B.SP26.FinalProject.ZachJ.Middleware;
 using COMP003B.SP26.FinalProject.ZachJ.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +32,8 @@ namespace COMP003B.SP26.FinalProject.ZachJ
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            //custom middleware
+            app.UseMiddleware<RequestTimingMiddleware>();
             app.UseAuthorization();
 
             app.MapStaticAssets();
