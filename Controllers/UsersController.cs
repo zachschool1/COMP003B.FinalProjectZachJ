@@ -34,6 +34,10 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.FavoriteSongs)
+                .Include(u => u.FavoriteMovies)
+                .Include(u => u.FavoriteShows)
+                .Include(u => u.FavoriteGames)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {

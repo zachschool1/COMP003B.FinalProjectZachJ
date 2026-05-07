@@ -3,6 +3,7 @@ using COMP003B.SP26.FinalProject.ZachJ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
 {
     [DbContext(typeof(FinalsContext))]
-    partial class FinalsContextModelSnapshot : ModelSnapshot
+    [Migration("20260507021102_AddMusic")]
+    partial class AddMusic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,6 +88,33 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
                     b.ToTable("Movies");
                 });
 
+            modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.Music", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Music");
+                });
+
             modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.Shows", b =>
                 {
                     b.Property<int>("Id")
@@ -115,41 +145,6 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Shows");
-                });
-
-            modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.Songs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Artist")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Songs");
                 });
 
             modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.User", b =>
@@ -213,17 +208,6 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.Songs", b =>
-                {
-                    b.HasOne("COMP003B.SP26.FinalProject.ZachJ.Models.User", "User")
-                        .WithMany("FavoriteSongs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.User", b =>
                 {
                     b.Navigation("FavoriteGames");
@@ -231,8 +215,6 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
                     b.Navigation("FavoriteMovies");
 
                     b.Navigation("FavoriteShows");
-
-                    b.Navigation("FavoriteSongs");
                 });
 #pragma warning restore 612, 618
         }

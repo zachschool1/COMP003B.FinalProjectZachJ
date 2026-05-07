@@ -10,22 +10,23 @@ using COMP003B.SP26.FinalProject.ZachJ.Models;
 
 namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
 {
-    public class MusicsController : Controller
+    public class SongsController : Controller
     {
         private readonly FinalsContext _context;
 
-        public MusicsController(FinalsContext context)
+        public SongsController(FinalsContext context)
         {
             _context = context;
         }
 
-        // GET: Musics
+        // GET: Songs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Music.ToListAsync());
+            var finalsContext = _context.Songs.Include(s => s.User);
+            return View(await finalsContext.ToListAsync());
         }
 
-        // GET: Musics/Details/5
+        // GET: Songs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,45 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 return NotFound();
             }
 
-            var music = await _context.Music
+            var songs = await _context.Songs
+                .Include(s => s.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (music == null)
+            if (songs == null)
             {
                 return NotFound();
             }
 
-            return View(music);
+            return View(songs);
         }
 
-        // GET: Musics/Create
+        // GET: Songs/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
-        // POST: Musics/Create
+        // POST: Songs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Rating,Comments")] Music music)
+        public async Task<IActionResult> Create([Bind("Id,Title,Genre,Rating,Comments,UserId")] Songs songs)
         {
+
+            ModelState.Remove("User");
+
             if (ModelState.IsValid)
             {
-                _context.Add(music);
+                _context.Add(songs);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(music);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", songs.UserId);
+            return View(songs);
         }
 
-        // GET: Musics/Edit/5
+        // GET: Songs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +80,23 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 return NotFound();
             }
 
-            var music = await _context.Music.FindAsync(id);
-            if (music == null)
+            var songs = await _context.Songs.FindAsync(id);
+            if (songs == null)
             {
                 return NotFound();
             }
-            return View(music);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", songs.UserId);
+            return View(songs);
         }
 
-        // POST: Musics/Edit/5
+        // POST: Songs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Rating,Comments")] Music music)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Genre,Rating,Comments,UserId")] Songs songs)
         {
-            if (id != music.Id)
+            if (id != songs.Id)
             {
                 return NotFound();
             }
@@ -97,12 +105,12 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
             {
                 try
                 {
-                    _context.Update(music);
+                    _context.Update(songs);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MusicExists(music.Id))
+                    if (!SongsExists(songs.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +121,11 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(music);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", songs.UserId);
+            return View(songs);
         }
 
-        // GET: Musics/Delete/5
+        // GET: Songs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +133,35 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers
                 return NotFound();
             }
 
-            var music = await _context.Music
+            var songs = await _context.Songs
+                .Include(s => s.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (music == null)
+            if (songs == null)
             {
                 return NotFound();
             }
 
-            return View(music);
+            return View(songs);
         }
 
-        // POST: Musics/Delete/5
+        // POST: Songs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var music = await _context.Music.FindAsync(id);
-            if (music != null)
+            var songs = await _context.Songs.FindAsync(id);
+            if (songs != null)
             {
-                _context.Music.Remove(music);
+                _context.Songs.Remove(songs);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MusicExists(int id)
+        private bool SongsExists(int id)
         {
-            return _context.Music.Any(e => e.Id == id);
+            return _context.Songs.Any(e => e.Id == id);
         }
     }
 }

@@ -3,6 +3,7 @@ using COMP003B.SP26.FinalProject.ZachJ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
 {
     [DbContext(typeof(FinalsContext))]
-    partial class FinalsContextModelSnapshot : ModelSnapshot
+    [Migration("20260507031013_updateSongs")]
+    partial class updateSongs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,6 +129,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Artist")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Comments")
@@ -216,7 +220,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
             modelBuilder.Entity("COMP003B.SP26.FinalProject.ZachJ.Models.Songs", b =>
                 {
                     b.HasOne("COMP003B.SP26.FinalProject.ZachJ.Models.User", "User")
-                        .WithMany("FavoriteSongs")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -231,8 +235,6 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
                     b.Navigation("FavoriteMovies");
 
                     b.Navigation("FavoriteShows");
-
-                    b.Navigation("FavoriteSongs");
                 });
 #pragma warning restore 612, 618
         }

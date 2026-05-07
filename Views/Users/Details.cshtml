@@ -37,7 +37,24 @@
         </dd>
     </dl>
 </div>
-<div>
+
+
+<div class="pt-2">
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+
+<div class="pt-3">
+    <h4>Songs</h4>
+    @foreach (var song in Model.FavoriteSongs)
+    {
+        <partial name="_MusicPartial" model="song" />
+    }
+</div>
+<div>
+    <h4>Movies</h4>
+    @foreach (var movie in Model.FavoriteMovies)
+    {
+        <partial name="_MoviePartial" model="movie" />
+    }
 </div>

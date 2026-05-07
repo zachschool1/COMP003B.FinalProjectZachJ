@@ -3,6 +3,7 @@ using COMP003B.SP26.FinalProject.ZachJ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP003B.SP26.FinalProject.ZachJ.Migrations
 {
     [DbContext(typeof(FinalsContext))]
-    partial class FinalsContextModelSnapshot : ModelSnapshot
+    [Migration("20260507042701_updateArtist")]
+    partial class updateArtist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

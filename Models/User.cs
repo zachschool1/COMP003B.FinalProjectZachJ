@@ -20,7 +20,7 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Models
         public virtual ICollection<Games> FavoriteGames { get; set; } = new List<Games>();
         public virtual ICollection<Movies> FavoriteMovies { get; set; } = new List<Movies>();
         public virtual ICollection<Shows> FavoriteShows { get; set; } = new List<Shows>();
-
+        public virtual ICollection<Songs> FavoriteSongs { get; set; } = new List<Songs>();
 
     }
 }
