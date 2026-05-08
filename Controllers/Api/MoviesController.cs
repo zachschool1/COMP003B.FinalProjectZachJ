@@ -23,11 +23,19 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers.Api
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movies>>> GetMovies()
+        public async Task<ActionResult> GetMovies()
         {
-            return await _context.Movies
-                .Include(u => u.User)
+            var movie = await _context.Movies.Select(g => new
+            {
+                g.Id,
+                g.Title,
+                g.Rating,
+                UserName = g.User.Name
+            })
                 .ToListAsync();
+
+
+            return Ok(movie);
         }
 
         // GET: api/Movies/5
@@ -35,15 +43,22 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers.Api
         public async Task<ActionResult<Movies>> GetMovies(int id)
         {
             var movies = await _context.Movies
-                .Include(u => u.User)
-                .FirstOrDefaultAsync(u => u.Id == id);
+                .Where(u => u.Id == id)
+                .Select(g => new
+                {
+                    g.Id,
+                    g.Title,
+                    g.Rating,
+                    LikedBy = g.User.Name
+                })
+             .FirstOrDefaultAsync();
 
             if (movies == null)
             {
                 return NotFound();
             }
 
-            return movies;
+            return Ok(movies);
         }
 
         // PUT: api/Movies/5

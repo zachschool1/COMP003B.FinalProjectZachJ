@@ -23,26 +23,42 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers.Api
 
         // GET: api/Games
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Games>>> GetGames()
+        public async Task<ActionResult> GetGames()
         {
-            return await _context.Games
-                .Include(u => u.User).ToListAsync();
+            var games = await _context.Games.Select(g => new
+            {
+                g.Id,
+                g.Title,
+                g.Rating,
+                UserName = g.User.Name
+            })
+                .ToListAsync();
+
+
+            return Ok(games);
         }
 
         // GET: api/Games/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Games>> GetGames(int id)
         {
-            var games = await _context.Games
-                .Include(u => u.User)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            var game = await _context.Games
+                .Where(u => u.Id == id)
+                .Select(g => new
+                {
+                    g.Id,
+                    g.Title,
+                    g.Rating,
+                    LikedBy = g.User.Name
+                })
+             .FirstOrDefaultAsync();
 
-            if (games == null)
+            if (game == null)
             {
                 return NotFound();
             }
 
-            return games;
+            return Ok(game);
         }
 
         // PUT: api/Games/5

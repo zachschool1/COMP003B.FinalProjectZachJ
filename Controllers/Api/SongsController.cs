@@ -23,23 +23,42 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers.Api
 
         // GET: api/Songs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Songs>>> GetSongs()
+        public async Task<ActionResult> GetSongs()
         {
-            return await _context.Songs.ToListAsync();
+            var song = await _context.Songs.Select(g => new
+            {
+                g.Id,
+                g.Title,
+                g.Rating,
+                UserName = g.User.Name
+            })
+                .ToListAsync();
+
+
+            return Ok(song);
         }
 
         // GET: api/Songs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Songs>> GetSongs(int id)
         {
-            var songs = await _context.Songs.FindAsync(id);
+            var song = await _context.Songs
+                .Where(u => u.Id == id)
+                .Select(g => new
+                {
+                    g.Id,
+                    g.Title,
+                    g.Rating,
+                    LikedBy = g.User.Name
+                })
+             .FirstOrDefaultAsync();
 
-            if (songs == null)
+            if (song == null)
             {
                 return NotFound();
             }
 
-            return songs;
+            return Ok(song);
         }
 
         // PUT: api/Songs/5

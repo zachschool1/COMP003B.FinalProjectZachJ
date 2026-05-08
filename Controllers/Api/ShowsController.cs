@@ -23,23 +23,41 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers.Api
 
         // GET: api/Shows
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Shows>>> GetShows()
+        public async Task<ActionResult> GetShows()
         {
-            return await _context.Shows.ToListAsync();
+            var shows = await _context.Shows.Select(g => new
+            {
+                g.Id,
+                g.Title,
+                g.Rating,
+                UserName = g.User.Name
+            })
+                .ToListAsync();
+
+
+            return Ok(shows);
         }
 
         // GET: api/Shows/5
-        [HttpGet("{id}")]
         public async Task<ActionResult<Shows>> GetShows(int id)
         {
-            var shows = await _context.Shows.FindAsync(id);
+            var show = await _context.Movies
+                .Where(u => u.Id == id)
+                .Select(g => new
+                {
+                    g.Id,
+                    g.Title,
+                    g.Rating,
+                    LikedBy = g.User.Name
+                })
+             .FirstOrDefaultAsync();
 
-            if (shows == null)
+            if (show == null)
             {
                 return NotFound();
             }
 
-            return shows;
+            return Ok(show);
         }
 
         // PUT: api/Shows/5
