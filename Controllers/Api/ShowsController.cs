@@ -39,9 +39,10 @@ namespace COMP003B.SP26.FinalProject.ZachJ.Controllers.Api
         }
 
         // GET: api/Shows/5
+        [HttpGet("{id}")]
         public async Task<ActionResult<Shows>> GetShows(int id)
         {
-            var show = await _context.Movies
+            var show = await _context.Shows
                 .Where(u => u.Id == id)
                 .Select(g => new
                 {
